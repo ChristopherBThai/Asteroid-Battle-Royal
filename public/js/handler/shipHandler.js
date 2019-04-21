@@ -1,4 +1,20 @@
 
+
+function CreateRespawnButton(self,x,y)
+{
+	
+	console.log("can i gt here?");
+	var camera = self.cameras.main;
+
+	var alien = self.add.sprite(camera.x+650, camera.y+500, 'death').setOrigin(0.5,0.5).setDisplaySize(100,100).setInteractive();
+    alien.setScrollFactor(0);
+    alien.on('pointerdown', function () {
+		console.log("it owrked");
+	});
+	
+	
+}
+
 function addPlayer(self, playerInfo) {
 	self.ship = self.physics.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.3).setDisplaySize(50,50);
 	self.ship.health = 3;
@@ -30,11 +46,15 @@ function playerMoved (self,playerInfo){
 function shipUpdate(self){
 	let {ship,cursors,physics,socket} = self;
 
-	if(!ship||self.gameOver) return;
+	if(!ship||self.gameOver)
+	{
+		return;
+	}
 	if(self.dead){ 
 		ship.destroy();
 		//delete self.ship;
 		self.gameOver = true;
+		CreateRespawnButton(self,1000,1000);
 		return;
 	}
 	if (cursors.left.isDown) {
