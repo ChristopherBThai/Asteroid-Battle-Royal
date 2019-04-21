@@ -11,7 +11,9 @@ function createBullet(self){
 
 function bulletUpdate(self){
 	let {ship,cursors,physics,socket} = self;
-
+	if(!ship) return;
+	if(self.dead){
+		canShoot = false;}
 	if(canShoot&&cursors.fire.isDown){
 		canShoot = false;
 		setTimeout(function(){canShoot = true;},shootCooldown);
