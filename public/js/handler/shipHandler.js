@@ -28,8 +28,8 @@ function shipUpdate(self){
 
 	if(!ship) return;
 	if(self.dead){ 
-		console.log("died");
 		ship.destroy();
+		delete self.ship;
 		socket.emit('dead');
 		return;
 	}

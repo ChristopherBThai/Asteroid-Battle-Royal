@@ -26,17 +26,18 @@ function preload() {
   this.load.image('ship', 'assets/spaceShips_001.png');
 	this.load.image('otherPlayer', 'assets/enemyBlack5.png');
 	this.load.image('bullet', 'assets/star_gold.png');
+	this.load.image('asteroid', 'assets/star_gold.png');
 }
 
 function create() {
 	var self = this;
 	this.socket = io();
 	this.otherPlayers = this.physics.add.group();
-	this.myBullets = this.physics.add.group();
-	this.enemyBullets = this.physics.add.group();
+	this.asteroids = this.physics.add.group();
 
 	createWorld(this);
 	createBullet(this);
+	createAsteroid(this);
 
 	this.socket.on('currentPlayers', function (players) {
 		Object.keys(players).forEach(function (id) {
