@@ -20,7 +20,7 @@ exports.createClient = function(io,socket){
 
 	// when a player moves, update the player data
 	socket.on('playerMovement', function (movementData) {
-		movePlayer(movementData);
+		movePlayer(socket.id,movementData);
 		// emit a message to all players about the player that moved
 		socket.broadcast.emit('playerMoved', players[socket.id]);
 	});
@@ -51,7 +51,6 @@ var getAllPlayers = exports.getAllPlayers = function(){
 
 // Called when a player is moved
 var movePlayer = exports.movePlayer = function(id,data){
-	console.log(data);
 	players[id].x = data.x;
 	players[id].y = data.y;
 	players[id].rotation = data.rotation;
