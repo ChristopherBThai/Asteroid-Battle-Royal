@@ -1,33 +1,4 @@
 
-
-function CreateRespawnButton(self,x,y)
-{
-	
-	console.log("can i gt here?");
-	var camera = self.cameras.main;
-
-	var alien = self.add.sprite(camera.x+650, camera.y+500, 'death').setOrigin(0.5,0.5).setDisplaySize(100,100).setInteractive();
-    alien.setScrollFactor(0);
-    alien.on('pointerdown', function () {
-		console.log("it owrked");
-	});
-    
-	var particles = self.add.particles('blue');
-
-    var emitter = particles.createEmitter();
-
-    emitter.setPosition(self.ship.x, self.ship.y);
-	//emitter.setScale(.1);
-	emitter.setScaleX(.1);
-	emitter.setScaleY(.1);
-    emitter.setSpeed(10);
-    emitter.setBlendMode(Phaser.BlendModes.ADD);	
-	emitter.start();
-	
-	emitter.emitParticle(2);
-	emitter.explode();
-}
-
 function addPlayer(self, playerInfo) {
 	self.ship = self.physics.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.3).setDisplaySize(50,50);
 	self.ship.health = 3;
@@ -38,6 +9,8 @@ function addPlayer(self, playerInfo) {
 //	self.ship.radius = Math.pow(Math.pow(53,2),Math.pow(40,2),.5);
 	self.ship.radius = 25;
 	self.dead = false;
+	self.gameOver = false;
+	resetHearts();
 }
 
 function addOtherPlayers (self, playerInfo) {
@@ -67,7 +40,7 @@ function shipUpdate(self){
 		ship.destroy();
 		//delete self.ship;
 		self.gameOver = true;
-		CreateRespawnButton(self,1000,1000);
+		CreateRespawnButton(self);
 		return;
 	}
 	if (cursors.left.isDown) {

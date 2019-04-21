@@ -2,13 +2,16 @@ var objects = require('../object.js');
 var players = objects.players;
 
 exports.createClient = function(io,socket){
+
 	// create a new player and add it to our players object
-	createPlayer(socket.id)
+	socket.on('createPlayer',function(){
+		createPlayer(socket.id)
+		// update all other players of the new player
+		io.emit('newPlayer', players[socket.id]);
+	});
 
 	// send the players object to the new player
 	socket.emit('currentPlayers', getAllPlayers());
-	// update all other players of the new player
-	socket.broadcast.emit('newPlayer', players[socket.id]);
 
 	// when a player disconnects, remove them from our players object
 	socket.on('disconnect', function () {
@@ -20,9 +23,9 @@ exports.createClient = function(io,socket){
 
 	// when a player moves, update the player data
 	socket.on('playerMovement', function (movementData) {
-		movePlayer(socket.id,movementData);
-		// emit a message to all players about the player that moved
-		socket.broadcast.emit('playerMoved', players[socket.id]);
+		if(movePlayer(socket.id,movementData))
+			// emit a message to all players about the player that moved
+			socket.broadcast.emit('playerMoved', players[socket.id]);
 	});
 	
 	socket.on('dead',function(){
@@ -56,7 +59,9 @@ var getAllPlayers = exports.getAllPlayers = function(){
 
 // Called when a player is moved
 var movePlayer = exports.movePlayer = function(id,data){
+	if(!players[id]) return false;
 	players[id].x = data.x;
 	players[id].y = data.y;
 	players[id].rotation = data.rotation;
+	return true;
 }

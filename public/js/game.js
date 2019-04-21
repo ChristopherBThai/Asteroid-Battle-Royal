@@ -25,11 +25,12 @@ var game = new Phaser.Game(config);
 function preload() {
   this.load.image('ship', 'assets/ship.png');
 	this.load.image('otherPlayer', 'assets/ship.png');
-	this.load.image('bullet', 'assets/star_gold.png');
+	this.load.image('bullet', 'assets/circle.png');
 	this.load.image('asteroid', 'assets/asteroid.png');
-	this.load.image('health', 'assets/heart.jpg');
-	this.load.image('death', 'assets/death.png');
 	this.load.image('blue', 'assets/blue.png');
+	this.load.image('health', 'assets/heart.png');
+	this.load.image('respawn', 'assets/respawn.png');
+	this.load.image('start', 'assets/start.png');
 }
 
 function create() {
@@ -41,23 +42,23 @@ function create() {
 	createWorld(this);
 	createBullet(this);
 	createAsteroid(this);
-	createHealth(this);
 	createBackground(this);
-	createScore(this);
+	createMenu(this);
+	createCamera(this);
 
 	this.socket.on('currentPlayers', function (players) {
 		Object.keys(players).forEach(function (id) {
-			if (players[id].playerId === self.socket.id) {
-				addPlayer(self, players[id]);
-				createCamera(self);
-			} else {
 				addOtherPlayers(self, players[id]);
-			}
 		});
 	});
 
 	this.socket.on('newPlayer', function (playerInfo) {
-		addOtherPlayers(self, playerInfo);
+		if (playerInfo.playerId === self.socket.id) {
+			addPlayer(self, playerInfo);
+			bindCamera(self);
+		} else {
+			addOtherPlayers(self, playerInfo);
+		}
 	});
 
 	this.socket.on('disconnect', function (playerId) {
@@ -72,12 +73,13 @@ function create() {
 		playerMoved(self,playerInfo);
 	});
 
+
 	this.cursors = this.input.keyboard.addKeys(
 		{up:Phaser.Input.Keyboard.KeyCodes.W,
 		down:Phaser.Input.Keyboard.KeyCodes.S,
 		left:Phaser.Input.Keyboard.KeyCodes.A,
 		right:Phaser.Input.Keyboard.KeyCodes.D,
-		fire:Phaser.Input.Keyboard.KeyCodes.J});
+		fire:Phaser.Input.Keyboard.KeyCodes.SPACE});
 
 }
 
