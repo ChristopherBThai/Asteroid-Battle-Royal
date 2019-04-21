@@ -26,7 +26,7 @@ function preload() {
   this.load.image('ship', 'assets/ship.png');
 	this.load.image('otherPlayer', 'assets/ship.png');
 	this.load.image('bullet', 'assets/star_gold.png');
-	this.load.image('asteroid', 'assets/star_gold.png');
+	this.load.image('asteroid', 'assets/asteroid.png');
 }
 
 function create() {

@@ -46,6 +46,8 @@ function shipUpdate(self){
 
 	if (cursors.up.isDown) {
 		physics.velocityFromRotation(ship.rotation + 1.5, 420, ship.body.acceleration);
+	} else if(cursors.down.isDown){
+		physics.velocityFromRotation(ship.rotation + 1.5, -300, ship.body.acceleration);
 	} else {
 		ship.setAcceleration(0);
 	}

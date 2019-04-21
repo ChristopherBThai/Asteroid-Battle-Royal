@@ -1,6 +1,6 @@
 var asteroids = {};
 var cid = 1;
-const bounds = 6000;
+const bounds = 4000;
 const maxAsteroids = 75;
 const maxVel = 2;
 const minVel = .5;

@@ -1,7 +1,7 @@
 var canShoot = true;
 var shootCooldown = 300;
 var bulletSpeed = 400;
-var bulletLife = 10000;
+var bulletLife = 5000;
 var bulletArray = {};
 var bulletCount = 0;
 
@@ -27,7 +27,6 @@ function enemyBullet(self,data){
 
 	bullet.ownerId = data.ownerId;
 	bullet.setDrag(0);
-	bullet.setMaxVelocity(bulletSpeed);
 	bullet.setVelocity(data.velx,data.vely);
 	self.physics.add.overlap(self.ship,bullet,function()
 	{
@@ -43,9 +42,8 @@ function fireBullet(self,playerInfo){
 	
 	bullet.ownerId = playerInfo.playerId;
 	bullet.setDrag(0);
-	bullet.setMaxVelocity(bulletSpeed);
 	bullet.setRotation(playerInfo.rotation);
-	bullet.setVelocity(toXVel(bulletSpeed,bullet.rotation),toYVel(bulletSpeed,bullet.rotation));
+	bullet.setVelocity(toXVel(bulletSpeed,bullet.rotation)+playerInfo.body.velocity.x,toYVel(bulletSpeed,bullet.rotation)+playerInfo.body.velocity.y);
 	bullet.id = bulletCount++;
 	
 	bulletArray[bullet.id] = bullet;
