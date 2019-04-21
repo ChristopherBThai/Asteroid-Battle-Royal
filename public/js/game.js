@@ -1,8 +1,11 @@
+canvas_width = window.innerWidth * window.devicePixelRatio;
+canvas_height = window.innerHeight * window.devicePixelRatio;
+
 var config = {
   type: Phaser.AUTO,
   parent: 'phaser-example',
-  width: 800,
-  height: 600,
+  width: canvas_width,
+  height: canvas_height,
   physics: {
     default: 'arcade',
     arcade: {
@@ -29,10 +32,13 @@ function create() {
 	this.socket = io();
 	this.otherPlayers = this.physics.add.group();
 
+	createWorld(this);
+
 	this.socket.on('currentPlayers', function (players) {
 		Object.keys(players).forEach(function (id) {
 			if (players[id].playerId === self.socket.id) {
 				addPlayer(self, players[id]);
+				createCamera(self);
 			} else {
 				addOtherPlayers(self, players[id]);
 			}
