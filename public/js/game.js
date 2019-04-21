@@ -24,13 +24,16 @@ var game = new Phaser.Game(config);
 
 function preload() {
   this.load.image('ship', 'assets/spaceShips_001.png');
-  this.load.image('otherPlayer', 'assets/enemyBlack5.png');
+	this.load.image('otherPlayer', 'assets/enemyBlack5.png');
+	this.load.image('bullet', 'assets/star_gold.png');
 }
 
 function create() {
 	var self = this;
 	this.socket = io();
 	this.otherPlayers = this.physics.add.group();
+	this.myBullets = this.physics.add.group();
+	this.enemyBullets = this.physics.add.group();
 
 	createWorld(this);
 
@@ -65,7 +68,8 @@ function create() {
 		{up:Phaser.Input.Keyboard.KeyCodes.W,
 		down:Phaser.Input.Keyboard.KeyCodes.S,
 		left:Phaser.Input.Keyboard.KeyCodes.A,
-		right:Phaser.Input.Keyboard.KeyCodes.D});
+		right:Phaser.Input.Keyboard.KeyCodes.D,
+		fire:Phaser.Input.Keyboard.KeyCodes.J});
 
 }
 
