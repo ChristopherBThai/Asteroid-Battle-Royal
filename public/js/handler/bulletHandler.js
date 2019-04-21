@@ -1,7 +1,10 @@
+<<<<<<< HEAD
 var canShoot = true;
 var shootCooldown = 300;
 var bulletSpeed = 400;
 var bulletLife = 10000;
+=======
+>>>>>>> master
 
 function createBullet(self){
 	self.socket.on('newBullet',function(data){
@@ -26,6 +29,12 @@ function enemyBullet(self,data){
 	bullet.setDrag(0);
 	bullet.setMaxVelocity(bulletSpeed);
 	bullet.setVelocity(data.velx,data.vely);
+	self.physics.add.overlap(self.ship,bullet,function()
+	{
+		self.dead = true;
+		bullet.destroy();
+	});
+
 	return bullet;
 }
 
