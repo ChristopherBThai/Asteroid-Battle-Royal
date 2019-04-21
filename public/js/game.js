@@ -29,6 +29,7 @@ function preload() {
 	this.load.image('asteroid', 'assets/asteroid.png');
 	this.load.image('health', 'assets/heart.jpg');
 	this.load.image('death', 'assets/death.png');
+	this.load.image('blue', 'assets/blue.png');
 }
 
 function create() {
