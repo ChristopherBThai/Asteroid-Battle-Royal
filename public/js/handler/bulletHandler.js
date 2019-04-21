@@ -8,6 +8,9 @@ function bulletUpdate(self){
 
 function fireBullet(self,playerInfo){
 	var bullet = self.physics.add.image(playerInfo.x, playerInfo.y, 'bullet').setOrigin(0.5, 0.5).setDisplaySize(15, 15);
+	setTimeout(function(){
+		bullet.destroy();
+	},1000);
 	bullet.ownerId = playerInfo.playerId;
 	bullet.setDrag(0);
 	bullet.setMaxVelocity(300);
@@ -16,6 +19,10 @@ function fireBullet(self,playerInfo){
 	//bullet.body.velocityFromRotation(playerInfo.rotation,200);
 	bullet.setVelocity(toXVel(200,bullet.rotation),toYVel(200,bullet.rotation));
 	//self.myBullets.add(bullet);
+}
+
+function destroyBullet(bullet){
+	bullet.destroy();
 }
 
 function toXVel(speed,radians){
