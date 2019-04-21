@@ -75,5 +75,6 @@ function create() {
 
 function update() {
 	shipUpdate(this);
+	bulletUpdate(this);
 }
 

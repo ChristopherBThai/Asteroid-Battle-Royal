@@ -22,16 +22,9 @@ function playerMoved (self,playerInfo){
 	});
 }
 
-function fireBullet(self,playerInfo)
-{
-	const bullet = self.add.sprite(playerInfo.x,playerInfo.y,'bullet').setOrigin(0.5,0.5).setDisplaySize(15,15);
-	bullet.ownerId = playerInfo.playerId;
-	//self.physics.velocityFromRotation(playerInfo.rotation + 1.5, 100, bullet.body.acceleration);
-	self.myBullets.add(bullet);
-}
-
 function shipUpdate(self){
 	let {ship,cursors,physics,socket} = self;
+
 	if(!ship) return;
 	if (cursors.left.isDown) {
 		ship.setAngularVelocity(-150);
@@ -45,11 +38,6 @@ function shipUpdate(self){
 		physics.velocityFromRotation(ship.rotation + 1.5, 100, ship.body.acceleration);
 	} else {
 		ship.setAcceleration(0);
-	}
-
-	if(cursors.fire.isDown)
-	{
-		fireBullet(self,ship);
 	}
 
 	physics.world.wrap(ship, 5);
