@@ -4,6 +4,7 @@ var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
 
 var playerHandler = require('./handler/playerHandler.js');
+var bulletHandler = require('./handler/bulletHandler.js');
 
 app.use(express.static(__dirname + '/public'));
 
@@ -15,6 +16,7 @@ io.on('connection', function (socket) {
 
   console.log('a user connected: ', socket.id);
   playerHandler.createClient(io,socket);
+  bulletHandler.createClient(io,socket);
 
 });
 

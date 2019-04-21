@@ -1,9 +1,25 @@
+function createBullet(self){
+	self.socket.on('newBullet',function(data){
+		enemyBullet(self,data);
+	});
+}
+
 function bulletUpdate(self){
 	let {ship,cursors,physics,socket} = self;
 
 	if(cursors.fire.isDown){
-		fireBullet(self,ship);
+		let bullet = fireBullet(self,ship).body;
+		socket.emit('createBullet',{velx:bullet.velocity.x,vely:bullet.velocity.y,x:bullet.position.x,y:bullet.position.y});
 	}
+}
+
+function enemyBullet(self,data){
+	var bullet = self.physics.add.image(data.x, data.y, 'bullet').setOrigin(0.5, 0.5).setDisplaySize(15, 15);
+	bullet.ownerId = data.ownerId;
+	bullet.setDrag(0);
+	bullet.setMaxVelocity(300);
+	bullet.setVelocity(data.velx,data.vely);
+	return bullet;
 }
 
 function fireBullet(self,playerInfo){
@@ -12,10 +28,8 @@ function fireBullet(self,playerInfo){
 	bullet.setDrag(0);
 	bullet.setMaxVelocity(300);
 	bullet.setRotation(playerInfo.rotation);
-	//self.physics.velocityFromRotation(bullet.rotation, 200, bullet.body.acceleration);
-	//bullet.body.velocityFromRotation(playerInfo.rotation,200);
 	bullet.setVelocity(toXVel(200,bullet.rotation),toYVel(200,bullet.rotation));
-	//self.myBullets.add(bullet);
+	return bullet;
 }
 
 function toXVel(speed,radians){
