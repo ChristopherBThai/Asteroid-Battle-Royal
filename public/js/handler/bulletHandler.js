@@ -31,7 +31,13 @@ function enemyBullet(self,data){
 	bullet.setVelocity(data.velx,data.vely);
 	self.physics.add.overlap(self.ship,bullet,function()
 	{
-		self.dead = true;
+		self.ship.health--;
+		displayLocalHealth(self,self.ship.health);
+		console.log(self.ship.health);
+		if(self.ship.health <=0)
+		{
+		  self.dead = true;
+		}
 		bullet.destroy();
 	});
 

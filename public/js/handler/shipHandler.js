@@ -1,6 +1,7 @@
 
 function addPlayer(self, playerInfo) {
 	self.ship = self.physics.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
+	self.ship.health = 3;
 	self.ship.setDrag(100);
 	self.ship.setAngularDrag(100);
 	self.ship.setMaxVelocity(200);
@@ -24,6 +25,7 @@ function playerMoved (self,playerInfo){
 		}
 	});
 }
+
 
 function shipUpdate(self){
 	let {ship,cursors,physics,socket} = self;
