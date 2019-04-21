@@ -35,7 +35,8 @@ function enemyBullet(self,data){
 		console.log(self.ship.health);
 		if(self.ship.health <=0)
 		{
-		  self.dead = true;
+			self.socket.emit('dead',bullet.ownerId);
+			self.dead = true;
 		}
 		bullet.destroy();
 	});

@@ -1,3 +1,4 @@
+const angularVel = 50;
 function createAsteroid(self){
 	let socket = self.socket;
 	
@@ -20,6 +21,7 @@ function createAsteroid(self){
 function addAsteroid(self,tempast){
 	const asteroid = self.add.sprite(tempast.x, tempast.y, 'asteroid').setOrigin(0.5, 0.5).setDisplaySize(tempast.size, tempast.size);
 	asteroid.id = tempast.id;
+	asteroid.setAngle(Math.random()*360);
 	self.asteroids.add(asteroid);
 }
 
@@ -50,6 +52,7 @@ function asteroidMoved(self,tempast){
 			var distance = Math.pow(Math.pow(newAsteroid.x-self.ship.x,2) + Math.pow(newAsteroid.y-self.ship.y,2),.5);
 			if(distance <= asteroidRadius + self.ship.radius)
 			{
+				self.socket.emit('dead');
 				self.dead = true;
 			}
 			

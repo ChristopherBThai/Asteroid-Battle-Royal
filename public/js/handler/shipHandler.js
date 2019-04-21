@@ -35,7 +35,6 @@ function shipUpdate(self){
 		ship.destroy();
 		//delete self.ship;
 		self.gameOver = true;
-		socket.emit('dead');
 		return;
 	}
 	if (cursors.left.isDown) {

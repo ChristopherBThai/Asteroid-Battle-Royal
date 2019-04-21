@@ -25,10 +25,9 @@ exports.createClient = function(io,socket){
 		socket.broadcast.emit('playerMoved', players[socket.id]);
 	});
 	
-	socket.on('dead',function()
-		{
-			socket.broadcast.emit('disconnect',socket.id);
-		});
+	socket.on('dead',function(){
+		socket.broadcast.emit('disconnect',socket.id);
+	});
 
 }
 
@@ -39,6 +38,7 @@ var createPlayer = exports.createPlayer = function(id){
     x: Math.floor(Math.random() * 3900) + 50,
     y: Math.floor(Math.random() * 3900) + 50,
     playerId: id,
+	score:0
   };
 
   return objects.players[id];

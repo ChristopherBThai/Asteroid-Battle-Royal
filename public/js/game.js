@@ -42,6 +42,7 @@ function create() {
 	createAsteroid(this);
 	createHealth(this);
 	createBackground(this);
+	createScore(this);
 
 	this.socket.on('currentPlayers', function (players) {
 		Object.keys(players).forEach(function (id) {
