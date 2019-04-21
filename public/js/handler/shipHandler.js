@@ -26,10 +26,11 @@ function playerMoved (self,playerInfo){
 function shipUpdate(self){
 	let {ship,cursors,physics,socket} = self;
 
-	if(!ship) return;
+	if(!ship||self.gameOver) return;
 	if(self.dead){ 
 		ship.destroy();
-		delete self.ship;
+		//delete self.ship;
+		self.gameOver = true;
 		socket.emit('dead');
 		return;
 	}

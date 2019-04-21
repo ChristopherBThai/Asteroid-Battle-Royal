@@ -34,8 +34,6 @@ function createAsteroid(socket){
 		id:cid
 	}
 
-	console.log(asteroids[cid]);
-
 	console.log("asteroid created with id "+cid);
 
 	io.emit("newAsteroid",asteroids[cid]);
