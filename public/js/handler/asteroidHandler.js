@@ -49,11 +49,13 @@ function asteroidMoved(self,tempast){
 			}
 
 
-			var distance = Math.pow(Math.pow(newAsteroid.x-self.ship.x,2) + Math.pow(newAsteroid.y-self.ship.y,2),.5);
-			if(distance <= asteroidRadius + self.ship.radius)
-			{
-				self.socket.emit('dead');
-				self.dead = true;
+			if(self.ship){
+				var distance = Math.pow(Math.pow(newAsteroid.x-self.ship.x,2) + Math.pow(newAsteroid.y-self.ship.y,2),.5);
+				if(distance <= asteroidRadius + self.ship.radius)
+				{
+					self.socket.emit('dead');
+					self.dead = true;
+				}
 			}
 			
 			oldasteroid.setPosition(newAsteroid.x, newAsteroid.y);

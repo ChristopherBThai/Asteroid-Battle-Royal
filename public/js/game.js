@@ -46,17 +46,17 @@ function create() {
 
 	this.socket.on('currentPlayers', function (players) {
 		Object.keys(players).forEach(function (id) {
-			if (players[id].playerId === self.socket.id) {
-				addPlayer(self, players[id]);
-				createCamera(self);
-			} else {
 				addOtherPlayers(self, players[id]);
-			}
 		});
 	});
 
 	this.socket.on('newPlayer', function (playerInfo) {
-		addOtherPlayers(self, playerInfo);
+		if (playerInfo.playerId === self.socket.id) {
+			addPlayer(self, playerInfo);
+			createCamera(self);
+		} else {
+			addOtherPlayers(self, playerInfo);
+		}
 	});
 
 	this.socket.on('disconnect', function (playerId) {
@@ -70,6 +70,9 @@ function create() {
 	this.socket.on('playerMoved', function (playerInfo) {
 		playerMoved(self,playerInfo);
 	});
+
+	this.socket.emit('createPlayer');
+
 
 	this.cursors = this.input.keyboard.addKeys(
 		{up:Phaser.Input.Keyboard.KeyCodes.W,

@@ -2,13 +2,16 @@ var objects = require('../object.js');
 var players = objects.players;
 
 exports.createClient = function(io,socket){
+
 	// create a new player and add it to our players object
-	createPlayer(socket.id)
+	socket.on('createPlayer',function(){
+		createPlayer(socket.id)
+		// update all other players of the new player
+		io.emit('newPlayer', players[socket.id]);
+	});
 
 	// send the players object to the new player
 	socket.emit('currentPlayers', getAllPlayers());
-	// update all other players of the new player
-	socket.broadcast.emit('newPlayer', players[socket.id]);
 
 	// when a player disconnects, remove them from our players object
 	socket.on('disconnect', function () {
