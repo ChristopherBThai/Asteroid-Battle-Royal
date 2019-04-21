@@ -36,6 +36,7 @@ function create() {
 	this.enemyBullets = this.physics.add.group();
 
 	createWorld(this);
+	createBullet(this);
 
 	this.socket.on('currentPlayers', function (players) {
 		Object.keys(players).forEach(function (id) {
