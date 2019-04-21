@@ -1,18 +1,18 @@
 
 function addPlayer(self, playerInfo) {
-	self.ship = self.physics.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
+	self.ship = self.physics.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.3).setDisplaySize(50,50);
 	self.ship.health = 3;
-	self.ship.setDrag(100);
+	self.ship.setDrag(25);
 	self.ship.setAngularDrag(100);
-	self.ship.setMaxVelocity(200);
+	self.ship.setMaxVelocity(350);
 	self.ship.setCollideWorldBounds(true);
 //	self.ship.radius = Math.pow(Math.pow(53,2),Math.pow(40,2),.5);
-	self.ship.radius = 20;
+	self.ship.radius = 25;
 	self.dead = false;
 }
 
 function addOtherPlayers (self, playerInfo) {
-	const otherPlayer = self.add.sprite(playerInfo.x, playerInfo.y, 'otherPlayer').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
+	const otherPlayer = self.add.sprite(playerInfo.x, playerInfo.y, 'otherPlayer').setOrigin(0.5, 0.3).setDisplaySize(50, 50);
 	otherPlayer.playerId = playerInfo.playerId;
 	self.otherPlayers.add(otherPlayer);
 }
@@ -39,15 +39,15 @@ function shipUpdate(self){
 		return;
 	}
 	if (cursors.left.isDown) {
-		ship.setAngularVelocity(-150);
+		ship.setAngularVelocity(-300);
 	} else if (cursors.right.isDown) {
-		ship.setAngularVelocity(150);
+		ship.setAngularVelocity(300);
 	} else {
 		ship.setAngularVelocity(0);
 	}
 
 	if (cursors.up.isDown) {
-		physics.velocityFromRotation(ship.rotation + 1.5, 100, ship.body.acceleration);
+		physics.velocityFromRotation(ship.rotation + 1.5, 420, ship.body.acceleration);
 	} else {
 		ship.setAcceleration(0);
 	}

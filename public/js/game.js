@@ -1,5 +1,5 @@
-canvas_width = window.innerWidth * window.devicePixelRatio;
-canvas_height = window.innerHeight * window.devicePixelRatio;
+canvas_width = window.innerWidth;// * window.devicePixelRatio;
+canvas_height = window.innerHeight;// * window.devicePixelRatio;
 
 var config = {
   type: Phaser.AUTO,
@@ -23,8 +23,8 @@ var config = {
 var game = new Phaser.Game(config);
 
 function preload() {
-  this.load.image('ship', 'assets/spaceShips_001.png');
-	this.load.image('otherPlayer', 'assets/enemyBlack5.png');
+  this.load.image('ship', 'assets/ship.png');
+	this.load.image('otherPlayer', 'assets/ship.png');
 	this.load.image('bullet', 'assets/star_gold.png');
 	this.load.image('asteroid', 'assets/star_gold.png');
 	this.load.image('health', 'assets/heart.jpg');
@@ -42,7 +42,7 @@ function create() {
 	createBullet(this);
 	createAsteroid(this);
 	createHealth(this);
-	
+	createBackground(this);
 
 	this.socket.on('currentPlayers', function (players) {
 		Object.keys(players).forEach(function (id) {
