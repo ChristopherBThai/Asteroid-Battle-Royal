@@ -27,6 +27,8 @@ function preload() {
 	this.load.image('otherPlayer', 'assets/ship.png');
 	this.load.image('bullet', 'assets/star_gold.png');
 	this.load.image('asteroid', 'assets/asteroid.png');
+	this.load.image('health', 'assets/heart.jpg');
+	this.load.image('death', 'assets/death.png');
 }
 
 function create() {
@@ -38,6 +40,7 @@ function create() {
 	createWorld(this);
 	createBullet(this);
 	createAsteroid(this);
+	createHealth(this);
 	createBackground(this);
 
 	this.socket.on('currentPlayers', function (players) {
