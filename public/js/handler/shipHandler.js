@@ -5,6 +5,8 @@ function addPlayer(self, playerInfo) {
 	self.ship.setAngularDrag(100);
 	self.ship.setMaxVelocity(200);
 	self.ship.setCollideWorldBounds(true);
+//	self.ship.radius = Math.pow(Math.pow(53,2),Math.pow(40,2),.5);
+	self.ship.radius = 20;
 	self.dead = false;
 }
 

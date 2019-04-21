@@ -11,6 +11,10 @@ function createAsteroid(self){
 		asteroidMoved(self,ast);
 	});
 
+	socket.on('newAsteroid', function (ast) {
+		addAsteroid(self, ast);
+	});
+
 }
 
 function addAsteroid(self,tempast){
@@ -26,9 +30,32 @@ function asteroidMoved(self,tempast){
 
 		if(newAsteroid){
 			//asteroid.setRotation(playerInfo.rotation);
+			//var asteroidRadius = Math.pow(Math.pow(oldAsteroid.x,2),Math.pow(oldAsteroid.y,2),.5);			
+
+			var asteroidRadius = newAsteroid.size/2;
+			for(let i in bulletArray)
+			{
+				let tempRadius = 15/2;
+				let tempDistance = Math.sqrt(Math.pow(bulletArray[i].x - newAsteroid.x,2) + Math.pow(bulletArray[i].y - newAsteroid.y,2));
+				if(tempDistance <= tempRadius + asteroidRadius)
+					{
+						bulletArray[i].destroy();
+						delete bulletArray[i];
+						console.log("I hit it");
+						self.socket.emit('AsteroidHit',id);
+					}
+			}
+
+
+			var distance = Math.pow(Math.pow(newAsteroid.x-self.ship.x,2) + Math.pow(newAsteroid.y-self.ship.y,2),.5);
+			if(distance <= asteroidRadius + self.ship.radius)
+			{
+				self.dead = true;
+			}
+			
 			oldasteroid.setPosition(newAsteroid.x, newAsteroid.y);
 		}else{
-			//oldasteroid.delete();
+			oldasteroid.destroy();
 		}
 
 	});

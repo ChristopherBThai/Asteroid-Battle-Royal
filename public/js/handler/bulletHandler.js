@@ -2,6 +2,8 @@ var canShoot = true;
 var shootCooldown = 300;
 var bulletSpeed = 400;
 var bulletLife = 10000;
+var bulletArray = {};
+var bulletCount = 0;
 
 function createBullet(self){
 	self.socket.on('newBullet',function(data){
@@ -22,6 +24,7 @@ function bulletUpdate(self){
 
 function enemyBullet(self,data){
 	var bullet = self.physics.add.image(data.x, data.y, 'bullet').setOrigin(0.5, 0.5).setDisplaySize(15, 15);
+
 	bullet.ownerId = data.ownerId;
 	bullet.setDrag(0);
 	bullet.setMaxVelocity(bulletSpeed);
@@ -37,14 +40,22 @@ function enemyBullet(self,data){
 
 function fireBullet(self,playerInfo){
 	var bullet = self.physics.add.image(playerInfo.x, playerInfo.y, 'bullet').setOrigin(0.5, 0.5).setDisplaySize(15, 15);
-	setTimeout(function(){
-		bullet.destroy();
-	},bulletLife);
+	
 	bullet.ownerId = playerInfo.playerId;
 	bullet.setDrag(0);
 	bullet.setMaxVelocity(bulletSpeed);
 	bullet.setRotation(playerInfo.rotation);
 	bullet.setVelocity(toXVel(bulletSpeed,bullet.rotation),toYVel(bulletSpeed,bullet.rotation));
+	bullet.id = bulletCount++;
+	
+	bulletArray[bullet.id] = bullet;
+	setTimeout(function(){
+		if(bullet)
+		{
+		bullet.destroy();
+		delete bulletArray[bullet.id];
+		}
+	},bulletLife);
 	return bullet;
 }
 
