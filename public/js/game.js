@@ -7,7 +7,7 @@ var config = {
     default: 'arcade',
     arcade: {
       debug: false,
-      gravity: { y: 0 }
+      gravity: { y: 2, x:3 }
     }
   },
   scene: {
@@ -22,8 +22,11 @@ var game = new Phaser.Game(config);
 function preload() {
   this.load.image('ship', 'assets/spaceShips_001.png');
   this.load.image('otherPlayer', 'assets/enemyBlack5.png');
+  this.load.image('asteroid', 'assets/medium/a10000.png');
 }
 
+var asteroids;
+var platform;
 function create() {
   var self = this;
   this.socket = io();
@@ -61,9 +64,18 @@ function create() {
 			  down:Phaser.Input.Keyboard.KeyCodes.S,
 			  left:Phaser.Input.Keyboard.KeyCodes.A,
 			  right:Phaser.Input.Keyboard.KeyCodes.D});
-
+   asteroids = this.physics.add.group();
+   this.physics.add.collider(asteroids, self.otherPlayers);
+   var asteroid = asteroids.create(10, 16, 'asteroid');
+   asteroid.setBounce(1);
+   asteroid.setCollideWorldBounds(true);
+   asteroid.setVelocity(Phaser.Math.Between(-200, 200), 20);
+//   platform = this.physics.add.staticGroup();
+//   platform.create(19, 50, 'asteroid');
+//   platform.create(99, 20, 'asteroid');
 }
  
+
 function addPlayer(self, playerInfo) {
   self.ship = self.physics.add.image(playerInfo.x, playerInfo.y, 'ship').setOrigin(0.5, 0.5).setDisplaySize(53, 40);
   self.ship.setDrag(100);
@@ -110,5 +122,8 @@ function update() {
       rotation: this.ship.rotation
     };
   }
+  this.physics.world.wrap(asteroids);
+
+
 }
 
