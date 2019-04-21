@@ -1,3 +1,4 @@
+
 function createBullet(self){
 	self.socket.on('newBullet',function(data){
 		enemyBullet(self,data);
@@ -19,6 +20,12 @@ function enemyBullet(self,data){
 	bullet.setDrag(0);
 	bullet.setMaxVelocity(300);
 	bullet.setVelocity(data.velx,data.vely);
+	self.physics.add.overlap(self.ship,bullet,function()
+	{
+		self.dead = true;
+		bullet.destroy();
+	});
+
 	return bullet;
 }
 

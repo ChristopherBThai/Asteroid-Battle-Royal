@@ -5,6 +5,7 @@ function addPlayer(self, playerInfo) {
 	self.ship.setAngularDrag(100);
 	self.ship.setMaxVelocity(200);
 	self.ship.setCollideWorldBounds(true);
+	self.dead = false;
 }
 
 function addOtherPlayers (self, playerInfo) {
@@ -26,6 +27,12 @@ function shipUpdate(self){
 	let {ship,cursors,physics,socket} = self;
 
 	if(!ship) return;
+	if(self.dead){ 
+		console.log("died");
+		ship.destroy();
+		socket.emit('dead');
+		return;
+	}
 	if (cursors.left.isDown) {
 		ship.setAngularVelocity(-150);
 	} else if (cursors.right.isDown) {

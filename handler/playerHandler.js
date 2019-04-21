@@ -24,6 +24,11 @@ exports.createClient = function(io,socket){
 		// emit a message to all players about the player that moved
 		socket.broadcast.emit('playerMoved', players[socket.id]);
 	});
+	
+	socket.on('dead',function()
+		{
+			socket.broadcast.emit('disconnect',socket.id);
+		});
 
 }
 
