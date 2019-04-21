@@ -11,8 +11,21 @@ function CreateRespawnButton(self,x,y)
     alien.on('pointerdown', function () {
 		console.log("it owrked");
 	});
+    
+	var particles = self.add.particles('blue');
+
+    var emitter = particles.createEmitter();
+
+    emitter.setPosition(self.ship.x, self.ship.y);
+	//emitter.setScale(.1);
+	emitter.setScaleX(.1);
+	emitter.setScaleY(.1);
+    emitter.setSpeed(10);
+    emitter.setBlendMode(Phaser.BlendModes.ADD);	
+	emitter.start();
 	
-	
+	emitter.emitParticle(2);
+	emitter.explode();
 }
 
 function addPlayer(self, playerInfo) {
